@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WeatherTracker.Pages"
+             x:Class="WeatherTracker.Pages.FavoritesPage"
+             Title="Favorites">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <Label 
+            Grid.Row="0"
+            Text="Favorite Cities"
+            FontSize="20"
+            FontAttributes="Bold"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"/>
+
+        <ListView Grid.Row="1" x:Name="listView" HasUnevenRows="True" VerticalOptions="FillAndExpand" ItemsSource="{Binding FavList}" BackgroundColor="DimGray">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Border Stroke="AntiqueWhite" StrokeThickness="1" Margin="5">
+                            <VerticalStackLayout Padding="10">
+                                <Grid Padding="10" Margin="5"
+                                  HorizontalOptions="Center"
+                                  RowDefinitions="Auto, Auto" ColumnDefinitions="Auto,Auto">
+
+                                    <Label Grid.Row="0" Grid.Column="0" Padding="5" Text="{Binding Name}" FontSize="15" FontAttributes="Bold" />
+                                    <Label Grid.Row="0" Grid.Column="1" Padding="5" Text="{Binding Temp, StringFormat='{}{0}°F'}" FontSize="15" />
+                                    <Label Grid.Row="1" Grid.Column="0" Padding="5" Text="{Binding Notes}" FontSize="12" />
+
+                                </Grid>
+
+                                <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, Auto" HorizontalOptions="End">
+                                    <Button Grid.Row="0" Grid.Column="0" Text="Edit" BackgroundColor="Gray" TextColor="Black"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:FavoritesPage}}, Path=OpenEditForm}"
+                                            CommandParameter="{Binding .}"/>
+                                    <Button Grid.Row="0" Grid.Column="1" Text="Delete" BackgroundColor="Red" TextColor="White"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:FavoritesPage}}, Path=DeleteCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Frame IsVisible="{Binding IsEditFormVisible}"
+                BackgroundColor="DimGray"
+                CornerRadius="10"
+                Padding= "20"
+                BorderColor="Black"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.RowSpan="2">
+            <StackLayout>
+                <Label Text="Add to Favorites"
+                 FontSize="18"
+                 FontAttributes="Bold"
+                 HorizontalOptions="Center" />
+                <Label Text="" x:Name="editCityName" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                <Label Text="Notes"
+                 FontSize="14"
+                 FontAttributes="Bold"
+                 HorizontalOptions="Center" />
+                <Entry Placeholder="Enter Optional Notes" PlaceholderColor="Black" x:Name="editOptionalNotesEntry" />
+
+
+                <HorizontalStackLayout Spacing="10">
+                    <Button Text="Apply" Clicked="ApplyButton_Clicked" />
+                    <Button Text="Cancel" Clicked="EditCancelButton_Clicked" />
+                </HorizontalStackLayout>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

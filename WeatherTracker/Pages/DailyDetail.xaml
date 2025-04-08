@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeatherTracker.Pages.DailyDetail"
+             Title="Forecast">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label 
+                Text="7-DAY FORECAST"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="25"/>
+            <RadioButton Grid.Row="0" Grid.Column="1" x:Name="Fahrenheit" Margin="5" CheckedChanged="Fahrenheit_CheckedChanged" IsChecked="True"
+                     GroupName="UnitGroup" Content="Fahrenheit" />
+            <RadioButton Grid.Row="0" Grid.Column="2" x:Name="Celsius" Margin="5" CheckedChanged="Celsius_CheckedChanged" IsChecked="False"
+                     GroupName="UnitGroup" Content="Celsius" />
+        </Grid>
+
+        <ListView Grid.Row="1" x:Name="listView" ItemsSource="{Binding WeatherData}" HasUnevenRows="True" BackgroundColor="DimGray" VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <VerticalStackLayout>
+                            <Grid Padding="10" Margin="5"
+                                  HorizontalOptions="Start"
+                                  RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto,Auto, Auto, Auto, Auto, Auto, Auto">
+
+                                <Label Grid.Column="0" BackgroundColor="LightBlue" Padding="5" Text="{Binding Date, StringFormat='{0:MM/dd}'}"
+                                       FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+                                <Label Grid.Column="1" Padding="5" Text="{Binding AvgTemperature, StringFormat='{0:F1} Avg'}"
+                                       FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                       MaximumWidthRequest="100" />
+
+                                <Label Grid.Column="2" Padding="5" Text="{Binding TempMax, StringFormat='{0:F1} Hi'}"
+                                       FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                       MaximumWidthRequest="100"/>
+
+                                <Label Grid.Column="3" Padding="5" Text="{Binding TempMin, StringFormat='{0:F1} Low'}"
+                                       FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                       MaximumWidthRequest="100"/>
+
+                                <Label Grid.Column="1" Grid.Row="1" Padding="10" Text="{Binding Description}"
+                                       FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                       MaximumWidthRequest="100" />
+                                <Label Grid.Column="2" Grid.Row="1" Padding="10" Text="{Binding precip, StringFormat='{}Precip Amount: {0}'}"
+                                       FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                       MaximumWidthRequest="100" />
+                                <Label Grid.Column="3" Grid.Row="1" Padding="10" Text="{Binding precipprob, StringFormat='{}Precip Chance: {0}%'}"
+                                       FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                       MaximumWidthRequest="100" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</ContentPage>

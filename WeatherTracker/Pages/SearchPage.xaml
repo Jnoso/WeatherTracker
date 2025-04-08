@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WeatherTracker.Pages"
+             x:Class="WeatherTracker.Pages.SearchPage"
+             Title="Weather Forecast">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto" Padding="20">
+        <Button Grid.Row="0" Text="Favorites" FontSize="10" FontAttributes="Bold" HorizontalOptions="End" Command="{Binding ShowFavorite}" />
+        <Entry Grid.Row="1" Placeholder="Enter City" Text="{Binding City}" />
+        <Button Grid.Row="2" Text="Get Weather"
+                Command="{Binding ShowWeather}"/>
+
+        <Label Grid.Row="3" Text="WEATHER AHEAD" FontSize="30"/>
+
+
+        <ListView Grid.Row="4" x:Name="listView" HasUnevenRows="True" VerticalOptions="FillAndExpand" ItemsSource="{Binding WeatherForecast}" BackgroundColor="DimGray">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <VerticalStackLayout>
+                            <Grid Margin="5"
+                              HorizontalOptions="Start"
+                              RowDefinitions="Auto" ColumnDefinitions="Auto,Auto,Auto, Auto">
+
+                                <Label Grid.Column="0" BackgroundColor="LightBlue" Padding="10" Text="{Binding datetime, StringFormat='{0:MM/dd}'}"
+                                   FontSize="15" HorizontalOptions="Start" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+                                <Label Grid.Column="1" Padding="10" Text="{Binding tempmax, StringFormat='{}{0}°F Hi'}"
+                                   FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   MaximumWidthRequest="100"/>
+
+                                <Label Grid.Column="2" Padding="10" Text="{Binding tempmin, StringFormat='{}{0}°F Low'}"
+                                   FontSize="15" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   MaximumWidthRequest="100"/>
+
+                                <Label Grid.Column="3" Padding="10" Text="{Binding conditions}"
+                                   FontSize="13" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   MaximumWidthRequest="100" LineBreakMode="WordWrap" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="5" HorizontalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" Padding="5" Text="Add to Favorite" FontSize="12" FontAttributes="Bold" Clicked="addToFavorite" />
+            <Button Grid.Row="0" Grid.Column="1" Padding="5" Text="Detailed View" FontSize="10" FontAttributes="Bold" Command="{Binding DetailPage}" />
+
+        </Grid>
+
+        <Frame IsVisible="{Binding IsAddFormVisible}"
+       BackgroundColor="LightGray"
+       CornerRadius="10"
+       Padding= "20"
+       BorderColor="Black"
+       HorizontalOptions="Center"
+       VerticalOptions="Center"
+       Grid.RowSpan="6">
+            <StackLayout>
+                <Label Text="Add to Favorites"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                       TextColor="Black"/>
+                <Label Text="{Binding SearchedCity}" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                <Label Text="Notes"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                       Padding="5"
+                        HorizontalOptions="Center"
+                       TextColor="Black"/>
+                <Entry Placeholder="Enter Optional Notes" PlaceholderColor="White" BackgroundColor="Black" TextColor="White" x:Name="optionalNotesEntry" />
+
+
+                <HorizontalStackLayout Spacing="10" Padding="5">
+                    <Button Text="Add" Clicked="AddButton_Clicked" />
+                    <Button Text="Cancel" Clicked="AddCancelButton_Clicked" />
+                </HorizontalStackLayout>
+            </StackLayout>
+        </Frame>
+
+    </Grid>
+</ContentPage>
