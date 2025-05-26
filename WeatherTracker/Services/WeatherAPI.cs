@@ -12,7 +12,7 @@ namespace WeatherTracker.Services
 {
     public class WeatherAPI
     {
-        private const string APIKey = "34TWKDEH3DR6NPLSJJ72LM6LA";
+        private const string APIKey = "";
         private const string BaseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
 
         HttpClient _client;
